@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Ordenação</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .resultado {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e0e0e0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de Algoritmos de Ordenação</h1>
+
+    <label for="algoritmo">Escolha o algoritmo:</label>
+    <select id="algoritmo">
+        <option value="bubble">Bubble Sort</option>
+        <!-- Outras opções serão adicionadas pelas outras pessoas -->
+    </select>
+
+    <label for="tamanho">Tamanho do vetor:</label>
+    <input type="number" id="tamanho" min="1" max="1000" required>
+
+    <button onclick="executarOrdenacao()">Ordenar</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function gerarVetor(tamanho) {
+            let vetor = [];
+            for (let i = 0; i < tamanho; i++) {
+                vetor.push(Math.floor(Math.random() * 100));
+            }
+            return vetor;
+        }
+
+        function bubbleSort(vetor) {
+            let n = vetor.length;
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (vetor[j] > vetor[j + 1]) {
+                        let temp = vetor[j];
+                        vetor[j] = vetor[j + 1];
+                        vetor[j + 1] = temp;
+                    }
+                }
+            }
+            return vetor;
+        }
+
+        function executarOrdenacao() {
+            const algoritmo = document.getElementById("algoritmo").value;
+            const tamanho = parseInt(document.getElementById("tamanho").value);
+
+            if (!tamanho || tamanho <= 0) {
+                alert("Informe um tamanho válido para o vetor.");
+                return;
+            }
+
+            const vetor = gerarVetor(tamanho);
+            let resultadoOrdenado = [];
+
+            if (algoritmo === "bubble") {
+                resultadoOrdenado = bubbleSort([...vetor]);
+            }
+
+            document.getElementById("resultado").innerHTML = `
+                <strong>Vetor original:</strong> [${vetor.join(", ")}]
+                <br><br>
+                <strong>Vetor ordenado:</strong> [${resultadoOrdenado.join(", ")}]
+            `;
+        }
+    </script>
+</body>
+</html>
